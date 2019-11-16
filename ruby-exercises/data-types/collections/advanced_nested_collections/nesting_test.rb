@@ -96,7 +96,11 @@ class NestedTest < MiniTest::Test
 
   def test_full_menu_price_for_olive_garden
     #=======================
-
+    full_menu_price = []
+    stores[:olive_garden][:dishes].map do |dish|
+      full_menu_price << dish[:price]
+    end
+    full_menu_price = full_menu_price.sum
     #=======================
     assert_equal 27, full_menu_price
   end

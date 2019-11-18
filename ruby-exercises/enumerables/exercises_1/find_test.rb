@@ -1,6 +1,7 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 class FindTest < Minitest::Test
 
@@ -15,15 +16,20 @@ class FindTest < Minitest::Test
   def test_no_waldo
     words = ["scarf", "sandcastle", "flag", "pretzel", "crow", "key"]
     found = words.find do |word|
-      # Your code goes here
+      if word == "waldo"
+        word
+      end
     end
-    assert_equal nil, found
+    assert_nil nil, found
   end
 
   def test_find_waldo
-    skip
     words = ["noise", "dog", "fair", "house", "waldo", "bucket", "fish"]
-    # Your code goes here
+    found = words.find do |word|
+      if word == "waldo"
+        word
+      end
+    end
     assert_equal "waldo", found
   end
 

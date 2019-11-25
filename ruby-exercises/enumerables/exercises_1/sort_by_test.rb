@@ -44,7 +44,7 @@ class SortByTest < Minitest::Test
   def test_sort_by_number_of_cents
     prices = [3.02, 9.91, 7.9, 10.01, 11.0]
     sorted = prices.sort_by do |price|
-      (0.00 - price).abs
+      price.to_s.split('.')[1]
     end
     assert_equal [11.0, 10.01, 3.02, 7.9, 9.91], sorted
   end

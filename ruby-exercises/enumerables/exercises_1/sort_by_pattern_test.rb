@@ -1,6 +1,7 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 class SortByPatternTest < Minitest::Test
 
@@ -22,47 +23,60 @@ class SortByPatternTest < Minitest::Test
     things = ["pill", "box", "glass", "water", "sponge"]
     transformed = []
     things.each do |thing|
-      # Your code goes here
+      transformed << thing.reverse
     end
     transformed = transformed.sort
     sorted = []
     transformed.each do |sort_key, thing|
+      thing = sort_key.reverse
       sorted << thing
     end
     assert_equal ["sponge", "pill", "water", "glass", "box"], sorted
   end
 
   def test_sort_by_distance
-    skip
     distances = ["1cm", "9cm", "30cm", "4cm", "2cm"]
     transformed = []
-    # Your code goes here
+    distances.each do |distance|
+      transformed << distance.to_i
+    end
     transformed = transformed.sort
     sorted = []
     transformed.each do |sort_key, distance|
-      sorted << distance
+      distance = sort_key.to_s
+      sorted << distance.concat('cm')
     end
     assert_equal ["1cm", "2cm", "4cm", "9cm", "30cm"], sorted
   end
 
   def test_sort_by_length
-    skip
     words = ["heteromorph", "ancyloceratina", "bioengineering", "mathematical", "bug"]
-    # Your code goes here
+
+    sorted = words.sort { |a, b| a.length <=> b.length }
+
     assert_equal ["bug", "heteromorph", "mathematical", "ancyloceratina", "bioengineering"], sorted
   end
 
   def test_sort_by_proximity_to_ten
-    skip
     prices = [3.02, 9.91, 17.9, 10.01, 11.0]
-    # Your code goes here
+    proximity = [3.02, 9.91, 17.9, 10.01, 11.0]
+    sorted = []
+    until proximity.empty?
+      price = proximity.min_by { |num| (10 - num).abs }
+      sorted << price
+      proximity.delete(price)
+    end
     assert_equal [10.01, 9.91, 11.0, 3.02, 17.9], sorted
   end
 
   def test_sort_by_number_of_cents
-    skip
     prices = [3.02, 9.91, 7.9, 10.01, 11.0]
-    # Your code goes here
+    string_prices = {}
+
+    prices.each do |price|
+      string_prices[price] = price.to_s.split(".").last
+    end
+    binding.pry
     assert_equal [11.0, 10.01, 3.02, 7.9, 9.91], sorted
   end
 

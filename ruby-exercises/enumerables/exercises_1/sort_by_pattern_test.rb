@@ -1,7 +1,6 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'pry'
 
 class SortByPatternTest < Minitest::Test
 
@@ -72,11 +71,18 @@ class SortByPatternTest < Minitest::Test
   def test_sort_by_number_of_cents
     prices = [3.02, 9.91, 7.9, 10.01, 11.0]
     string_prices = {}
+    sorted = []
 
     prices.each do |price|
-      string_prices[price] = price.to_s.split(".").last
+      string_prices[price] = price.to_s.split('.').last
     end
-    binding.pry
+
+    sorted_cents = string_prices.values.sort
+
+    sorted_cents.each do |cents|
+      sorted << string_prices.rassoc(cents)[0]
+    end
+
     assert_equal [11.0, 10.01, 3.02, 7.9, 9.91], sorted
   end
 
